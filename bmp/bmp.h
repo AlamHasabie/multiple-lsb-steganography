@@ -14,6 +14,7 @@ struct BMPFileHeader{
     string type;
     unsigned int fileSize;
     unsigned int dataOffset;
+    unsigned int reserved;
     
 };
 
@@ -52,9 +53,13 @@ class BMPFile {
     public :
         
         BMPFile(string filename);
-        int getFileSize();
+        unsigned int getImageSize();
         string getType();
         char* getContent();
+
+
+        // Function to write file out
+        void write(string filename);
 
 
 

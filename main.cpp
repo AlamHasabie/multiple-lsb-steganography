@@ -1,4 +1,4 @@
-#include "files/bmp.h"
+#include "bmp/bmp.h"
 
 
 
@@ -9,7 +9,9 @@ using namespace std;
 int main(){
 
 
-    BMPFile file("test.bmp");
+    BMPFile file("files/test.bmp");
+
+    file.write("files/test_output.bmp");
 
     // Read headers
 
