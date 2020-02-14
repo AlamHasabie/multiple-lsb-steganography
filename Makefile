@@ -1,4 +1,4 @@
 CC=g++ -std=c++11
-files = main.cpp bmp/bmp.c
-hellomake: main.cpp bmp/bmp.c 
+files = main.cpp bmp/bmp.c vigenere/vigenere.cc
+hellomake: 
 	$(CC) $(files) -static
