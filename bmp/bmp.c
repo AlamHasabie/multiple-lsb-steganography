@@ -1,6 +1,7 @@
 #include "bmp.h"
 
 #include <iostream>
+#include <math.h>
 
 #include <fstream>
 #include <ostream>
@@ -189,6 +190,26 @@ void BMPFile::unhideText(int length, int n_lsb){
             this->message[bit*n_lsb+i] = this->content[bit*8-n_lsb+i];    
         }
     }    
+}
+
+
+float BMPFile::PSNR(BMPFile& compared_image){
+
+
+    float rms;
+    if (this->infoHeader.imageSize!=compared_image.infoHeader.imageSize){
+        return -1;
+    } else {
+        for (int i = 0; i < this->infoHeader.imageSize; i++){
+            rms += pow(this->getContent()[i] - compared_image.getContent()[i],2);
+        }
+    }
+
+    rms = pow(rms/this->infoHeader.imageSize,0.5);
+    return 20*log10(256/rms);
+
+
+
 }
 
 

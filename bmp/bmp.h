@@ -69,6 +69,12 @@ class BMPFile {
         // Procedure for unhide teks in file bmp for n LSB
         void unhideText(int length, int n_lsb);
 
+
+        // Calculate PNR
+        // Return -1 if size is not same
+        // Else return a number
+        float PSNR(BMPFile& compared_image);
+
 };
 
 
