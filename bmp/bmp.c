@@ -69,6 +69,8 @@ BMPFile::BMPFile(string filename) {
         this->content[byte] = fstream.get();
     }
 
+    this->message = new char[this->infoHeader.imageSize];
+
     fstream.close();
 }
 
@@ -77,6 +79,10 @@ unsigned int BMPFile::getImageSize(){
 }
 char* BMPFile::getContent(){
     return this->content;
+}
+
+char* BMPFile::getMessage(){
+    return this->message;
 }
 
 void BMPFile::write(string filename){
@@ -116,6 +122,43 @@ void BMPFile::write(string filename){
     }
 
     fstream.close();
+}
+
+// Procedure for hide teks in file bmp for n LSB
+void BMPFile::hideText(string plainteks, int n_lsb){
+    // check pesan muat di media
+    int byte_to_hide =  0;
+    if (plainteks.length() % n_lsb == 0) {
+        byte_to_hide = plainteks.length() / n_lsb + 1;
+    }
+    else {
+        byte_to_hide = (plainteks.length() / n_lsb) + 1;   
+    }
+
+    if (byte_to_hide > this->getImageSize()) {
+        cout << "text yang ingin di-hide melebihi ukuran" << endl;
+    }
+    // menyimpan pesan ke media
+    else {
+        for (int byte = 0; byte < byte_to_hide - 1 ; byte++){
+            for (int i = 0; i < n_lsb; i++){
+                this->content[byte*8-n_lsb+i] = plainteks[byte*n_lsb+i];    
+            }
+        }    
+        for (int i = 0; i < plainteks.length() % n_lsb; i++){
+            this->content[(byte_to_hide-1)*8-n_lsb+i] = plainteks[(byte_to_hide-1)*n_lsb+i];    
+        }    
+    }
+    
+}
+
+// Procedure for unhide teks in file bmp for n LSB
+void BMPFile::unhideText(int length, int n_lsb){
+    for (int byte = 0; byte < length ; byte++){
+        for (int i = 0; i < n_lsb; i++){
+            this->message[byte*n_lsb+i] = this->content[byte*8-n_lsb+i];    
+        }
+    }    
 }
 
 
