@@ -184,9 +184,9 @@ void BMPFile::hideText(string plainteks, int n_lsb){
 // Procedure for unhide teks in file bmp for n LSB
 void BMPFile::unhideText(int length, int n_lsb){
 
-    for (int byte = 0; byte < length ; byte++){
+    for (int bit = 0; bit < length ; bit++){
         for (int i = 0; i < n_lsb; i++){
-            this->message[byte*n_lsb+i] = this->content[byte*8-n_lsb+i];    
+            this->message[bit*n_lsb+i] = this->content[bit*8-n_lsb+i];    
         }
     }    
 }
