@@ -4,6 +4,9 @@
 
 #include <fstream>
 #include <ostream>
+#include <sstream>
+
+#include <bitset>
 
 void getShort(unsigned short& num, ifstream& fstream);
 void getShort(short& num, ifstream& stream);
@@ -126,34 +129,61 @@ void BMPFile::write(string filename){
 
 // Procedure for hide teks in file bmp for n LSB
 void BMPFile::hideText(string plainteks, int n_lsb){
-    // check pesan muat di media
-    int byte_to_hide =  0;
-    if (plainteks.length() % n_lsb == 0) {
-        byte_to_hide = plainteks.length() / n_lsb + 1;
-    }
-    else {
-        byte_to_hide = (plainteks.length() / n_lsb) + 1;   
+    cout << "testtttt";
+    // turn into bit
+    string plainbit = "";
+    for (int i = 0; i < plainteks.length(); i++){
+        string b = bitset<8>(plainteks[i]).to_string();
+        plainbit = plainbit + b;
     }
 
-    if (byte_to_hide > this->getImageSize()) {
+    // check pesan muat di media
+    int bit_to_hide =  0;
+    if (plainbit.length() % n_lsb == 0) {
+        bit_to_hide = plainbit.length() / n_lsb + 1;
+    }
+    else {
+        bit_to_hide = (plainbit.length() / n_lsb) + 1;   
+    }
+
+    string contentbit = "";
+    for (int i = 0; i < bit_to_hide; i++){
+        string c = bitset<8>(this->content[i]).to_string();
+        contentbit = contentbit + c;
+    }
+
+    if (bit_to_hide > this->getImageSize()) {
         cout << "text yang ingin di-hide melebihi ukuran" << endl;
     }
     // menyimpan pesan ke media
     else {
-        for (int byte = 0; byte < byte_to_hide - 1 ; byte++){
+        for (int bit = 0; bit < bit_to_hide - 1 ; bit++){
             for (int i = 0; i < n_lsb; i++){
-                this->content[byte*8-n_lsb+i] = plainteks[byte*n_lsb+i];    
+                contentbit[bit*8-n_lsb+i] = plainbit[bit*n_lsb+i];    
             }
         }    
-        for (int i = 0; i < plainteks.length() % n_lsb; i++){
-            this->content[(byte_to_hide-1)*8-n_lsb+i] = plainteks[(byte_to_hide-1)*n_lsb+i];    
+        for (int i = 0; i < plainbit.length() % n_lsb; i++){
+            contentbit[(bit_to_hide-1)*8-n_lsb+i] = plainbit[(bit_to_hide-1)*n_lsb+i];    
         }    
+    }
+
+    string text = "";
+    stringstream sstream(contentbit);
+    while (sstream.good())
+    {
+        bitset<8> bits;
+        sstream >> bits;
+        text += char(bits.to_ulong());
+    }
+    for (int i = 0; i < contentbit.length()/8; i++){   
+        this->content[i] = text[i];
     }
     
 }
 
 // Procedure for unhide teks in file bmp for n LSB
 void BMPFile::unhideText(int length, int n_lsb){
+
     for (int byte = 0; byte < length ; byte++){
         for (int i = 0; i < n_lsb; i++){
             this->message[byte*n_lsb+i] = this->content[byte*8-n_lsb+i];    
