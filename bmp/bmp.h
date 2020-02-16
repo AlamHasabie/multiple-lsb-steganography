@@ -55,7 +55,8 @@ class BMPFile {
         BMPFile(string filename);
         unsigned int getImageSize();
         string getType();
-        char* getContent();
+        char* getContent();	
+		void setContent(int idx, char c);
 
 
         // Function to write file out
