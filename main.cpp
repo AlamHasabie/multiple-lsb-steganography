@@ -9,7 +9,7 @@ using namespace std;
 
 int main(){
 
-
+    
 
     BMPFile file("files/test.bmp");
     BMPFile file_2("files/test.bmp");

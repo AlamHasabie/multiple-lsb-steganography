@@ -84,6 +84,9 @@ unsigned int BMPFile::getImageSize(){
 char* BMPFile::getContent(){
     return this->content;
 }
+void BMPFile::setContent(int idx, char c){
+	this->content[idx] = c;
+}
 
 char* BMPFile::getMessage(){
     return this->message;
