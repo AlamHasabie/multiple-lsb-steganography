@@ -42,9 +42,9 @@ int main(){
     // psnr = file.PSNR(file_2);
     // cout << "PSNR : " << psnr << endl;
 
-    int stop = 0;
+    string stop = "n";
 
-    while (stop = 0){
+    while (stop != "y"){
         string plainteks;
         string use_cipher;
         string key;
@@ -59,7 +59,7 @@ int main(){
         if (use_cipher == "y") {
             cout << "Kunci = ";
             cin >> key;
-            //enkripsi
+            encryptAsciiVigenere(plainteks,plainteks,key);
         };
         cout << "Bit LSB =";
         cin >> n_lsb;
@@ -70,6 +70,7 @@ int main(){
 
         cout << "Continue? (y/n) ";
         cin >> stop;
+
     }
 
 
