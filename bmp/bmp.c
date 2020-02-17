@@ -130,12 +130,12 @@ void BMPFile::write(string filename){
 
 // Procedure for hide teks in file bmp for n LSB
 void BMPFile::hideText(string plainteks, int n_lsb){
-    cout << "testtttt";
     // turn into bit
     string plainbit = "";
     for (int i = 0; i < plainteks.length(); i++){
         string b = bitset<8>(plainteks[i]).to_string();
         plainbit = plainbit + b;
+        // SUCCESS cout << "bit" << i << plainbit << endl;
     }
 
     // check pesan muat di media

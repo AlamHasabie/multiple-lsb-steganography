@@ -16,14 +16,15 @@ int main(){
 
     float psnr;
 
-
-
+    string a = "hallloween";
+    string b = bitset<8>(a[0]).to_string();
+    cout << b.substr(0,8);
 
     // Read headers
 
     cout << "message = " << file.getMessage() << endl;
 
-    file.hideText("hallloween valentinee",2);
+    file.hideText("hallloween valentine",2);
     file.unhideText(30,2);
 
 
