@@ -24,8 +24,8 @@ int main(){
 
     cout << "message = " << file.getMessage() << endl;
 
-    file.hideText("hallloween valentine",2);
-    file.unhideText(30,2);
+    file.hideText("hallloween valentine",3);
+    file.unhideText(30,3);
 
 
     cout << "message = " << file.getMessage() << endl;

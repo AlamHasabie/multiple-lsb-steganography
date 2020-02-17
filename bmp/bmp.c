@@ -137,14 +137,17 @@ void BMPFile::hideText(string plainteks, int n_lsb){
         plainbit = plainbit + b;
         // SUCCESS cout << "bit" << i << plainbit << endl;
     }
+    cout << "length" << plainbit.length() << endl;
 
     // check pesan muat di media
     int bit_to_hide =  0;
     if (plainbit.length() % n_lsb == 0) {
-        bit_to_hide = plainbit.length() / n_lsb + 1;
+        bit_to_hide = plainbit.length() / n_lsb;
+        // SUCCESS cout << "bit hide 1" << bit_to_hide << "."<< endl;
     }
     else {
         bit_to_hide = (plainbit.length() / n_lsb) + 1;   
+        // SUCCESS cout << "bit hide 2" << bit_to_hide << endl;
     }
 
     string contentbit = "";
