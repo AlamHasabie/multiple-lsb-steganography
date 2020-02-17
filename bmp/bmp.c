@@ -137,9 +137,8 @@ void BMPFile::hideText(string plainteks, int n_lsb){
         plainbit = plainbit + b;
         // SUCCESS cout << "bit" << i << plainbit << endl;
     }
-    cout << "length" << plainbit.length() << endl;
+    // cout << "length" << plainbit.length() << endl;
 
-    // check pesan muat di media
     int bit_to_hide =  0;
     if (plainbit.length() % n_lsb == 0) {
         bit_to_hide = plainbit.length() / n_lsb;
@@ -149,27 +148,36 @@ void BMPFile::hideText(string plainteks, int n_lsb){
         bit_to_hide = (plainbit.length() / n_lsb) + 1;   
         // SUCCESS cout << "bit hide 2" << bit_to_hide << endl;
     }
+    // cout << "blength" << bit_to_hide << endl;
 
     string contentbit = "";
     for (int i = 0; i < bit_to_hide; i++){
         string c = bitset<8>(this->content[i]).to_string();
         contentbit = contentbit + c;
     }
+    // cout << "clength" << contentbit.length() << endl;
+    // SUCCESS CHAPTER 1
 
+
+    // check pesan muat di media
     if (bit_to_hide > this->getImageSize()) {
         cout << "text yang ingin di-hide melebihi ukuran" << endl;
     }
     // menyimpan pesan ke media
     else {
+        
         for (int bit = 0; bit < bit_to_hide - 1 ; bit++){
             for (int i = 0; i < n_lsb; i++){
                 contentbit[bit*8-n_lsb+i] = plainbit[bit*n_lsb+i];    
             }
         }    
+        
         for (int i = 0; i < plainbit.length() % n_lsb; i++){
             contentbit[(bit_to_hide-1)*8-n_lsb+i] = plainbit[(bit_to_hide-1)*n_lsb+i];    
         }    
+        
     }
+    // SUCCESS
 
     string text = "";
     stringstream sstream(contentbit);
@@ -182,6 +190,8 @@ void BMPFile::hideText(string plainteks, int n_lsb){
     for (int i = 0; i < contentbit.length()/8; i++){   
         this->content[i] = text[i];
     }
+    // SUCCESS cout << "infiltration" << endl;
+    // double corruption after function ends
     
 }
 
